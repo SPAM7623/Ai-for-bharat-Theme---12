@@ -14,9 +14,7 @@ from final_2 import (
 # OPENAI KEY
 # =====================================================
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # =====================================================
 # AUDIO FOLDER
@@ -31,7 +29,6 @@ os.makedirs("temp_audio", exist_ok=True)
 if "pipeline" not in st.session_state:
 
     st.session_state.pipeline = Pipeline(
-        OPENAI_API_KEY,
         DEPARTMENTS
     )
 
