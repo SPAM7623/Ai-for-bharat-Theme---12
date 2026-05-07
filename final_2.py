@@ -1,4 +1,5 @@
 
+import os
 import json
 import re
 import logging
@@ -4087,7 +4088,8 @@ class Pipeline:
 
 if __name__ == "__main__":
 
-    pipeline = Pipeline(API_KEY, DEPARTMENTS)
+    api_key = os.getenv("OPENAI_API_KEY")
+    pipeline = Pipeline(api_key, DEPARTMENTS)
     state = CaseState()
 
     print("🚀 System Ready (type 'exit' to stop)\n")
