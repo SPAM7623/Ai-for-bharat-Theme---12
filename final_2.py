@@ -487,9 +487,9 @@ class InputAgent:
 
 class UnderstandingAgent:
 
-    def __init__(self, api_key):
+    def __init__(self):
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     # =====================================================
     # SAFE JSON PARSER
@@ -1318,11 +1318,10 @@ class CaseBuilderAgent:
 
     def __init__(
         self,
-        api_key,
         departments
     ):
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.departments = departments
 
     # =====================================================
@@ -2045,9 +2044,9 @@ from openai import OpenAI
 
 class InteractionAgent:
 
-    def __init__(self, api_key):
+    def __init__(self):
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     # =====================================================
     # CORE RESPONSE GENERATOR
@@ -2581,9 +2580,9 @@ further assistance.
 
 class VerificationAgent:
 
-    def __init__(self, api_key):
+    def __init__(self):
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     # =====================================================
     # SUMMARY GENERATION
@@ -2907,9 +2906,9 @@ DEPARTMENTS = [
 
 class DecisionAgent:
 
-    def __init__(self, api_key):
+    def __init__(self):
 
-        self.client = OpenAI(api_key=api_key)
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     # =====================================================
     # SAFE JSON PARSER
@@ -3335,12 +3334,8 @@ class Pipeline:
 
     def __init__(
         self,
-        api_key,
         departments
     ):
-
-        if not api_key or not isinstance(api_key, str):
-            raise ValueError("api_key must be a non-empty string")
 
         if not departments or not isinstance(departments, list):
             raise ValueError("departments must be a non-empty list")
@@ -3354,15 +3349,14 @@ class Pipeline:
 
         self.input = InputAgent()
 
-        self.u = UnderstandingAgent(api_key)
+        self.u = UnderstandingAgent()
         self.c = CaseBuilderAgent(
-            api_key,
             departments
         )
 
-        self.i = InteractionAgent(api_key)
-        self.v = VerificationAgent(api_key)
-        self.d = DecisionAgent(api_key)
+        self.i = InteractionAgent()
+        self.v = VerificationAgent()
+        self.d = DecisionAgent()
 
         self.departments = departments
 
@@ -4088,8 +4082,7 @@ class Pipeline:
 
 if __name__ == "__main__":
 
-    api_key = os.getenv("OPENAI_API_KEY")
-    pipeline = Pipeline(api_key, DEPARTMENTS)
+    pipeline = Pipeline(DEPARTMENTS)
     state = CaseState()
 
     print("🚀 System Ready (type 'exit' to stop)\n")
